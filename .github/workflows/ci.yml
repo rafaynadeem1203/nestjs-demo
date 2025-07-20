@@ -40,8 +40,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Build
-        run : docker build -t ghcr.io/${{github.repository}}/nestjs-demo-project:${{github.sha}} .
+        run : |
+            docker build -t ghcr.io/${{github.repository}}/nestjs-demo-project:${{github.sha}} .
+            docker tag ghcr.io/${{github.repository}}/nestjs-demo-project:${{github.sha}} ghcr.io/${{github.repository}}/nestjs-demo-project:latest
 
       - name: Push Image
         run: |
             docker push ghcr.io/${{github.repository}}/nestjs-demo-project:${{github.sha}}
+            docker push ghcr.io/${{github.repository}}/nestjs-demo-project:latest
